@@ -51,13 +51,21 @@
         </div>
 
         <div class="group">
-            <label>Full Workout?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="workout" value="Yes" required> Yes</label>
-                <label><input type="radio" name="workout" value="No"> No</label>
-            </div>
-            <input type="text" name="workoutDetails" placeholder="What did you do?" style="margin-top:10px">
-        </div>
+    <label>Full Workout?</label>
+    <div class="radio-group">
+        <label><input type="radio" name="workout" value="Yes" required> Yes</label>
+        <label><input type="radio" name="workout" value="No"> No</label>
+    </div>
+    
+    <div id="workoutType" style="margin-top: 12px; display: none; gap: 15px; font-size: 0.9em; color: #666;">
+        <label><input type="radio" name="location" value="Gym"> 🏋️ Gym</label>
+        <label><input type="radio" name="location" value="Other"> 🏃 Other</label>
+    </div>
+
+    <input type="text" name="workoutDetails" placeholder="Details (e.g. Leg day, Yoga, Hike)" style="margin-top:10px">
+</div>
+
+        
 
         <div class="group">
             <label>Water Intake</label>
