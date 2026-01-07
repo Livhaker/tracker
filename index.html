@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Wellness Tracker</title>
+    <style>
+        :root { --primary: #7ea04d; --bg: #fdfaf6; --text: #4a4a4a; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 5px; }
+        #quote { font-style: italic; text-align: center; font-size: 0.9em; margin-bottom: 25px; color: #888; }
+        .group { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; }
+        .radio-group { display: flex; gap: 15px; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:active { transform: scale(0.98); }
+        .success-msg { display: none; text-align: center; color: var(--primary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Daily Goals</h2>
+    <p id="quote">"Rest is not laziness, it is the fuel for your soul."</p>
+    
+    <form id="trackerForm">
+        <div class="group">
+            <label>Vitamins?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="vitamins" value="Yes" required> Yes</label>
+                <label><input type="radio" name="vitamins" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="group">
+            <label>Haircare?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="haircare" value="Yes" required> Yes</label>
+                <label><input type="radio" name="haircare" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="group">
+            <label>Small Training?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="smallTraining" value="Yes" required> Yes</label>
+                <label><input type="radio" name="smallTraining" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="group">
+            <label>Full Workout?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="workout" value="Yes" required> Yes</label>
+                <label><input type="radio" name="workout" value="No"> No</label>
+            </div>
+            <input type="text" name="workoutDetails" placeholder="What did you do?" style="margin-top:10px">
+        </div>
+
+        <div class="group">
+            <label>Water Intake</label>
+            <input type="text" name="water" placeholder="e.g. 2 Liters">
+        </div>
+
+        <div class="group">
+            <label>Food</label>
+            <input type="text" name="food" placeholder="How was your nutrition today?">
+        </div>
+
+        <div class="group">
+            <label>Sleep</label>
+            <input type="text" name="sleep" placeholder="Hours or quality...">
+        </div>
+
+        <button type="submit" id="submitBtn">Log Today</button>
+    </form>
+    <div id="status" class="success-msg">Saved! See you tomorrow. ✨</div>
+</div>
+
+<script>
+    const quotes = [
+        "Small steps every day lead to big results.",
+        "Your body hears everything your mind says. Stay positive.",
+        "Happiness is not a destination, it's a way of life.",
+        "A well-rested mind is a creative mind.",
+        "Self-care is how you take your power back."
+    ];
+    document.getElementById('quote').innerText = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxwqHqG24m1Xvrgl3xo0epd4_Ux4A3NJ2HmH0McHbaxe-IOn1iSUeCj5IY5UXNw26Gt0A/exec';
+    const form = document.getElementById('trackerForm');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = "Saving...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                form.style.display = 'none';
+                document.getElementById('status').style.display = 'block';
+            })
+            .catch(error => alert('Error!', error.message));
+    });
+</script>
+
+</body>
+</html>
