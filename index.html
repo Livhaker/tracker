@@ -13,8 +13,8 @@
         .group { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 8px; }
         .radio-group { display: flex; gap: 15px; }
-        input[type="text"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; margin-bottom: 8px; }
+        button { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
         button:active { transform: scale(0.98); }
         .success-msg { display: none; text-align: center; color: var(--primary); font-weight: bold; }
     </style>
@@ -23,7 +23,7 @@
 
 <div class="container">
     <h2>Daily Goals ✨</h2>
-    <p id="quote">"Rest is not laziness, it is the fuel for your soul."</p>
+    <p id="quote">"Loading inspiration..."</p>
     
     <form id="trackerForm">
         <div class="group">
@@ -61,23 +61,34 @@
                 <label><input type="radio" name="location" value="Gym"> 🏋️ Gym</label>
                 <label><input type="radio" name="location" value="Other"> 🏃 Other</label>
             </div>
-
-            <input type="text" name="workoutDetails" placeholder="Details (e.g. Leg day, Yoga, Hike)" style="margin-top:10px">
+            <input type="text" name="workoutDetails" placeholder="Details (e.g. Leg day, Yoga)" style="margin-top:10px">
         </div>
 
         <div class="group">
-            <label>Water Intake</label>
-            <input type="text" name="water" placeholder="e.g. 2 Liters">
+            <label>Water Intake (Liters)</label>
+            <input type="number" step="0.1" name="water" placeholder="e.g. 2.5">
         </div>
 
         <div class="group">
-            <label>Food</label>
-            <input type="text" name="food" placeholder="How was your nutrition today?">
+            <label>Meals 🍽️</label>
+            <input type="text" name="breakfast" placeholder="Breakfast">
+            <input type="text" name="lunch" placeholder="Lunch">
+            <input type="text" name="dinner" placeholder="Dinner">
+            <input type="text" name="eveningMeal" placeholder="Evening Meal">
+            <input type="text" name="snacks" placeholder="Snacks/Treats">
         </div>
 
         <div class="group">
-            <label>Sleep</label>
-            <input type="text" name="sleep" placeholder="Hours or quality...">
+            <label>Happy with food today?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="foodHappy" value="Yes" required> Yes</label>
+                <label><input type="radio" name="foodHappy" value="No"> No</label>
+            </div>
+        </div>
+
+        <div class="group">
+            <label>Sleep (Hours)</label>
+            <input type="number" step="0.5" name="sleep" placeholder="e.g. 7.5">
         </div>
 
         <button type="submit" id="submitBtn">Log Today</button>
@@ -86,19 +97,16 @@
 </div>
 
 <script>
-    // 1. Inspirational Quotes logic
     const quotes = [
         "A well-rested mind is your greatest asset.",
         "Small steps today lead to a happier tomorrow.",
-        "Nourish your body, quiet your mind, let your soul shine.",
+        "Nourish your body, quiet your mind.",
         "Self-care is not selfish; it is essential.",
-        "Happiness is found in the simple habits of health.",
-        "Be gentle with yourself. You are growing.",
+        "Happiness is found in simple habits.",
         "Rest is a requirement, not a reward."
     ];
     document.getElementById('quote').innerText = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
 
-    // 2. TOGGLE LOGIC for Gym/Other
     const workoutRadios = document.querySelectorAll('input[name="workout"]');
     const workoutTypeDiv = document.getElementById('workoutType');
 
@@ -108,7 +116,6 @@
         });
     });
 
-    // 3. Form Submission logic
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxwqHqG24m1Xvrgl3xo0epd4_Ux4A3NJ2HmH0McHbaxe-IOn1iSUeCj5IY5UXNw26Gt0A/exec';
     const form = document.getElementById('trackerForm');
 
@@ -123,7 +130,7 @@
                 document.getElementById('status').style.display = 'block';
             })
             .catch(error => {
-                alert('Error! Check your internet or Google Script URL.');
+                alert('Error! Please check your connection.');
                 document.getElementById('submitBtn').disabled = false;
                 document.getElementById('submitBtn').innerText = "Log Today";
             });
